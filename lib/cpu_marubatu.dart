@@ -33,62 +33,59 @@ class _CPUHomePageState extends State<CPUHomePage> {
   List<Widget> buildLine = [Container()];
   double lineThickness = 4.0;
   late double lineWidth;
-
   final List<List<int>> settlementListHorizontal = [
     //横の勝ち方
-    [0,1,2,3],
-    [4,5,6,7],
-    [8,9,10,11],
-    [12,13,14,15],
+    [0, 1, 2, 3],
+    [4, 5, 6, 7],
+    [8, 9, 10, 11],
+    [12, 13, 14, 15],
   ];
 
   //横の勝ち方
   final List<List<int>> settlementListVertical = [
-    [0,4,8,12],
-    [1,5,9,13],
-    [2,6,10,14],
-    [3,7,11,15],
+    [0, 4, 8, 12],
+    [1, 5, 9, 13],
+    [2, 6, 10, 14],
+    [3, 7, 11, 15],
   ];
-
   final List<List<int>> settlementListDiagonal = [
     //斜めの勝ち方
-    [0,5,10,15],
-    [3,6,9,12],
+    [0, 5, 10, 15],
+    [3, 6, 9, 12],
   ];
-
-
   final List<List<int>> settlementListfour = [
     //正方形
     //1列目の
-    [0,1,4,5],
-    [2,3,6,7],
-    [1,2,5,6],
-
+    [0, 1, 4, 5],
+    [2, 3, 6, 7],
+    [1, 2, 5, 6],
     //２列目
-    [4,5,8,9],
-    [5,6,9,10],
-    [6,7,10,11],
-
+    [4, 5, 8, 9],
+    [5, 6, 9, 10],
+    [6, 7, 10, 11],
     //3列目
-    [8,9,12,13],
-    [9,10,13,14],
-    [10,11,14,15],
+    [8, 9, 12, 13],
+    [9, 10, 13, 14],
+    [10, 11, 14, 15],
   ];
-
-
   int number = 0;
 
   @override
   Widget build(BuildContext context) {
     lineWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.blue,size: 40,),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.blue,
+              size: 40,
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -96,20 +93,28 @@ class _CPUHomePageState extends State<CPUHomePage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.menu,color: Colors.blue,),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.blue,
+            ),
             onPressed: () {
               showDialog(
-                context: context, builder: (_){
-                return AlertDialog(
-                    title: Center(
-                        child: Text("勝ち手一覧", style: TextStyle(fontSize: 20),)),
-                    content:
-                    // Text('縦\n''横\n''斜め\n''正方形\n'),
-                    Image.asset('assets/images/1.png',)
-
-                );
-              },
-              );
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Center(
+                        child: Text(
+                          '勝ち手一覧',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      content: Image.asset(
+                        'assets/images/1.png',
+                      ),
+                    );
+                  });
             },
           ),
         ],
@@ -146,22 +151,39 @@ class _CPUHomePageState extends State<CPUHomePage> {
       ),
     );
   }
+
   Widget buildRow() {
     switch (gameStatus) {
       case GameStatus.play:
         return Row(
           children: [
-            turnOfCircle ? const Icon(FontAwesomeIcons.circle,size: 35,) : const Icon(Icons.clear,size: 40,),
-            const Text('のターン',style: TextStyle(fontSize: 30)),
+            turnOfCircle
+                ? const Icon(
+                    FontAwesomeIcons.circle,
+                    size: 35,
+                  )
+                : const Icon(
+                    Icons.clear,
+                    size: 40,
+                  ),
+            const Text('のターン', style: TextStyle(fontSize: 30)),
           ],
         );
       case GameStatus.draw:
-        return const Text("引き分けです。",style: TextStyle(fontSize: 30));
+        return const Text("引き分けです。", style: TextStyle(fontSize: 30));
       case GameStatus.settlement:
         return Row(
           children: [
-            !turnOfCircle ? const Icon(FontAwesomeIcons.circle,size: 35,) : const Icon(Icons.clear,size: 40,),
-            const Text("の勝ち!!",style: TextStyle(fontSize: 30)),
+            !turnOfCircle
+                ? const Icon(
+                    FontAwesomeIcons.circle,
+                    size: 35,
+                  )
+                : const Icon(
+                    Icons.clear,
+                    size: 40,
+                  ),
+            const Text("の勝ち!!", style: TextStyle(fontSize: 30)),
           ],
         );
       default:
@@ -170,7 +192,12 @@ class _CPUHomePageState extends State<CPUHomePage> {
   }
 
   Widget buildColumn() {
-    List<Widget> _columeChildren = [const Divider(height: 0.0, color: Colors.black,),];
+    List<Widget> _columnChildren = [
+      const Divider(
+        height: 0.0,
+        color: Colors.black,
+      ),
+    ];
     List<Widget> _rowChildren = [];
     for (int j = 0; j < 4; j++) {
       //横の行を作成するもの
@@ -181,26 +208,39 @@ class _CPUHomePageState extends State<CPUHomePage> {
             child: InkWell(
               onTap: gameStatus == GameStatus.play
                   ? () {
-                if (statusList[_index] == PieceStatus.none) {
-                  statusList[_index] = PieceStatus.circle;
+                      if (statusList[_index] == PieceStatus.none) {
+                        statusList[_index] = PieceStatus.circle;
+                        confirmResult();
+                        turnOfCircle = !turnOfCircle;
+                        confirmResult();
 
-                  number = _index;// _indexで
-                  //TODO　ここで順番を変えている
-                  print('味方は、$turnOfCircle');
-                  confirmResult();
-                  turnOfCircle = !turnOfCircle;
-                  confirmResult();
-                  //ここは少し時間を立ってから入れたい。
-                  var rng = Random();
-                  var tap = rng.nextInt(16);
-                  statusList[tap] = PieceStatus.cross;
-                  print('相手はは、$turnOfCircle');
-                  confirmResult();
-                  turnOfCircle = !turnOfCircle;
-                  confirmResult();
-                }
-                setState(() {});
-              } : null,
+                        //TODO 相手の番
+                        //TODO ここは少し時間を立ってから入れたい。
+                        var rng = Random();
+                        var tap = rng.nextInt(16);
+
+                        //TODO for文を考える！！
+
+                        // for (var i; statusList[tap] == PieceStatus.circle || statusList[tap] == PieceStatus.cross; i++) {
+                        //   print('$i');
+                        // }
+
+                        //TODO 重ならない手が出るまで、ひたすらランダムにする
+                        if(statusList[tap] == PieceStatus.circle || statusList[tap] == PieceStatus.cross) {
+                          var rng = Random();
+                          var tap = rng.nextInt(16);
+                          statusList[tap] = PieceStatus.cross;
+                        }else{
+                          print('問題なし');
+                          statusList[tap] = PieceStatus.cross;
+                        }
+                        confirmResult();
+                        turnOfCircle = !turnOfCircle;
+                        confirmResult();
+                      }
+                      setState(() {});
+                    }
+                  : null,
               child: AspectRatio(
                 aspectRatio: 1.0,
                 child: Row(
@@ -209,9 +249,9 @@ class _CPUHomePageState extends State<CPUHomePage> {
                     (i == 3)
                         ? Container()
                         : const VerticalDivider(
-                      width: 0.0,
-                      color: Colors.black,
-                    ),
+                            width: 0.0,
+                            color: Colors.black,
+                          ),
                   ],
                 ),
               ),
@@ -219,24 +259,27 @@ class _CPUHomePageState extends State<CPUHomePage> {
           ),
         );
       }
-      _columeChildren.add(
+      _columnChildren.add(
         Row(
           children: _rowChildren,
         ),
       );
-      _columeChildren.add(
-          const Divider(height: 0.0, color: Colors.black,));
+      _columnChildren.add(const Divider(
+        height: 0.0,
+        color: Colors.black,
+      ));
       _rowChildren = [];
     }
     return Stack(
       children: [
-        Column(children: _columeChildren),
+        Column(children: _columnChildren),
         Stack(
           children: buildLine,
         ),
       ],
     );
   }
+
   Container build1(PieceStatus pieceStatus) {
     switch (pieceStatus) {
       case PieceStatus.none:
@@ -261,18 +304,19 @@ class _CPUHomePageState extends State<CPUHomePage> {
         return Container();
     }
   }
+
   void confirmResult() {
     if (!statusList.contains(PieceStatus.none)) {
       gameStatus = GameStatus.draw;
     }
     //行における勝敗のパターン
     for (int i = 0; i < settlementListHorizontal.length; i++) {
-      if (statusList[settlementListHorizontal[i][0]] == statusList[settlementListHorizontal[i][1]]
-          &&
-          statusList[settlementListHorizontal[i][1]] == statusList[settlementListHorizontal[i][2]]
-          &&
-          statusList[settlementListHorizontal[i][2]] == statusList[settlementListHorizontal[i][3]]
-          &&
+      if (statusList[settlementListHorizontal[i][0]] ==
+              statusList[settlementListHorizontal[i][1]] &&
+          statusList[settlementListHorizontal[i][1]] ==
+              statusList[settlementListHorizontal[i][2]] &&
+          statusList[settlementListHorizontal[i][2]] ==
+              statusList[settlementListHorizontal[i][3]] &&
           statusList[settlementListHorizontal[i][0]] != PieceStatus.none) {
         buildLine.add(Container(
           margin: EdgeInsets.only(
@@ -283,12 +327,12 @@ class _CPUHomePageState extends State<CPUHomePage> {
     }
     //行における勝敗のパターン
     for (int i = 0; i < settlementListVertical.length; i++) {
-      if (statusList[settlementListVertical[i][0]] == statusList[settlementListVertical[i][1]]
-          &&
-          statusList[settlementListVertical[i][1]] == statusList[settlementListVertical[i][2]]
-          &&
-          statusList[settlementListVertical[i][2]] == statusList[settlementListVertical[i][3]]
-          &&
+      if (statusList[settlementListVertical[i][0]] ==
+              statusList[settlementListVertical[i][1]] &&
+          statusList[settlementListVertical[i][1]] ==
+              statusList[settlementListVertical[i][2]] &&
+          statusList[settlementListVertical[i][2]] ==
+              statusList[settlementListVertical[i][3]] &&
           statusList[settlementListVertical[i][0]] != PieceStatus.none) {
         buildLine.add(Container(
           margin: EdgeInsets.only(
@@ -299,46 +343,51 @@ class _CPUHomePageState extends State<CPUHomePage> {
     }
     //斜めにおける勝敗パターン
     for (int i = 0; i < settlementListDiagonal.length; i++) {
-      if (statusList[settlementListDiagonal[i][0]] == statusList[settlementListDiagonal[i][1]]
-          &&
-          statusList[settlementListDiagonal[i][1]] == statusList[settlementListDiagonal[i][2]]
-          &&
-          statusList[settlementListDiagonal[i][2]] == statusList[settlementListDiagonal[i][3]]
-          &&
+      if (statusList[settlementListDiagonal[i][0]] ==
+              statusList[settlementListDiagonal[i][1]] &&
+          statusList[settlementListDiagonal[i][1]] ==
+              statusList[settlementListDiagonal[i][2]] &&
+          statusList[settlementListDiagonal[i][2]] ==
+              statusList[settlementListDiagonal[i][3]] &&
           statusList[settlementListDiagonal[i][0]] != PieceStatus.none) {
-        buildLine.add(Transform.rotate(
-          alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
-          angle: i == 0 ? -pi / 4 : pi / 4,
-          child: Container(
-              width: lineThickness,
-              margin: EdgeInsets.only(left: i == 0 ? 0.0 : lineWidth - lineThickness)
+        buildLine.add(
+          Transform.rotate(
+            alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
+            angle: i == 0 ? -pi / 4 : pi / 4,
+            child: Container(
+                width: lineThickness,
+                margin: EdgeInsets.only(
+                    left: i == 0 ? 0.0 : lineWidth - lineThickness)),
           ),
-        ),
         );
         gameStatus = GameStatus.settlement;
       }
     }
     //行における勝敗のパターン
     for (int i = 0; i < settlementListfour.length; i++) {
-      if (statusList[settlementListfour[i][0]] == statusList[settlementListfour[i][1]]
-          &&
-          statusList[settlementListfour[i][1]] == statusList[settlementListfour[i][2]]
-          &&
-          statusList[settlementListfour[i][2]] == statusList[settlementListfour[i][3]]
-          &&
+      if (statusList[settlementListfour[i][0]] ==
+              statusList[settlementListfour[i][1]] &&
+          statusList[settlementListfour[i][1]] ==
+              statusList[settlementListfour[i][2]] &&
+          statusList[settlementListfour[i][2]] ==
+              statusList[settlementListfour[i][3]] &&
           statusList[settlementListfour[i][0]] != PieceStatus.none) {
-        buildLine.add(Transform.rotate(
-          alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
-          angle: i == 0 ? -pi / 4 : pi / 4,
-          child: Container(
-              width: lineThickness,
-              margin: EdgeInsets.only(left: i == 0 ? 0.0 : lineWidth - lineThickness)
+        buildLine.add(
+          Transform.rotate(
+            alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
+            angle: i == 0 ? -pi / 4 : pi / 4,
+            child: Container(
+                width: lineThickness,
+                margin: EdgeInsets.only(
+                    left: i == 0 ? 0.0 : lineWidth - lineThickness)),
           ),
-        ),
         );
         gameStatus = GameStatus.settlement;
       }
     }
+  }
+
+  void randomCircle() {
   }
 
   void landom() {
@@ -346,14 +395,12 @@ class _CPUHomePageState extends State<CPUHomePage> {
     //０から１６の数字を発生させる。
 
     var rng = Random();
-    for (var i = 0; i < 1; i++) {
-    }
+    for (var i = 0; i < 1; i++) {}
     //ランダムで出した数字の番号を押す。
     var tap = rng.nextInt(16);
     statusList[tap] = PieceStatus.cross;
 
     print('相手は、$turnOfCircle');
-
 
     //TODO　これは、押した時の番号
     // print('$number');
@@ -377,4 +424,8 @@ class _CPUHomePageState extends State<CPUHomePage> {
     //まるの時
     //print(statusList[number]);
   }
+
+
+
+
 }
