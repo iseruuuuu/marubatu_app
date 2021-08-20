@@ -161,6 +161,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
     switch (gameStatus) {
       case GameStatus.play:
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             turnOfCircle
                 ? const Icon(
@@ -179,11 +180,12 @@ class _CPUHomePageState extends State<CPUHomePage> {
         );
       case GameStatus.draw:
         return const Text(
-          "引き分けです。",
+          "引き分け",
           style: TextStyle(fontSize: 30),
         );
       case GameStatus.settlement:
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             !turnOfCircle
                 ? const Icon(
