@@ -213,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? () {
                 if (statusList[_index] == PieceStatus.none) {
                   statusList[_index] = turnOfCircle
-                      ? PieceStatus.cirlce
+                      ? PieceStatus.circle
                       : PieceStatus.cross;
                   turnOfCircle = !turnOfCircle;
                   confirmResult();
@@ -264,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
     switch (pieceStatus) {
       case PieceStatus.none:
         return Container();
-      case PieceStatus.cirlce:
+      case PieceStatus.circle:
         return Container(
           child: const Icon(
             FontAwesomeIcons.circle,

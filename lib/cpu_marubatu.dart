@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'model/model.dart';
 
-
 class CPUPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,15 +13,13 @@ class CPUPage extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const CPUHomePage(title: 'まるばつゲーム！'),
+      home: const CPUHomePage(),
     );
   }
 }
 
 class CPUHomePage extends StatefulWidget {
-  const CPUHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const CPUHomePage({Key? key}) : super(key: key);
 
   @override
   _CPUHomePageState createState() => _CPUHomePageState();
@@ -185,7 +182,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
               onTap: gameStatus == GameStatus.play
                   ? () {
                 if (statusList[_index] == PieceStatus.none) {
-                  statusList[_index] = PieceStatus.cirlce;
+                  statusList[_index] = PieceStatus.circle;
 
                   number = _index;// _indexで
                   //TODO　ここで順番を変えている
@@ -244,7 +241,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
     switch (pieceStatus) {
       case PieceStatus.none:
         return Container();
-      case PieceStatus.cirlce:
+      case PieceStatus.circle:
         return Container(
           child: const Icon(
             FontAwesomeIcons.circle,

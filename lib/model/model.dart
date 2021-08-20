@@ -1,6 +1,6 @@
 enum PieceStatus {
   none,
-  cirlce,
+  circle,
   cross
 }
 

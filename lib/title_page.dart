@@ -74,38 +74,9 @@ class _TitleHomePageState extends State<TitleHomePage> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: const Center(
-                          child: Text(
-                            "現在開発中",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        content: const Text(
-                          "少々お待ちください",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        actions: <Widget>[
-                          // ボタン領域
-                          const Spacer(),
-                          Center(
-                            child: TextButton(
-                              child: const Text(
-                                "閉じる",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=> const CPUHomePage(),
+                    ),
                   );
                 },
                 child: const Text(
@@ -169,6 +140,55 @@ class _TitleHomePageState extends State<TitleHomePage> {
     Navigator.pop(context);
   }
 }
+
+/*TODO 　現在使われているやつ！
+ showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: const Center(
+                          child: Text(
+                            "現在開発中",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        content: const Text(
+                          "少々お待ちください",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        actions: <Widget>[
+                          // ボタン領域
+                          const Spacer(),
+                          Center(
+                            child: TextButton(
+                              child: const Text(
+                                "閉じる",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Navigator.push(context, MaterialPageRoute(builder: (context) => CPUPage()));
 
 /*
