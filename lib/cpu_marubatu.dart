@@ -83,7 +83,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
             icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.blue,
-              size: 40,
+              size: 25,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -105,7 +105,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
                       child: Text(
                         '勝ち手一覧',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                         ),
                       ),
                     ),
@@ -122,28 +122,23 @@ class _CPUHomePageState extends State<CPUHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Center(child: buildRow()),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildRow(),
-                SizedBox(
-                  width: 130,
-                  height: 50,
-                  child: ElevatedButton(
-                    child: const Text("クリア"),
-                    onPressed: () {
-                      setState(() {
-                        turnOfCircle = true;
-                        statusList = List.filled(16, PieceStatus.none);
-                        gameStatus = GameStatus.play;
-                        buildLine = [Container()];
-                      });
-                    },
-                  ),
-                ),
-              ],
+            child: SizedBox(
+              width: 130,
+              height: 50,
+              child: ElevatedButton(
+                child: const Text("クリア"),
+                onPressed: () {
+                  setState(() {
+                    turnOfCircle = true;
+                    statusList = List.filled(16, PieceStatus.none);
+                    gameStatus = GameStatus.play;
+                    buildLine = [Container()];
+                  });
+                },
+              ),
             ),
           ),
           buildColumn(),
@@ -159,13 +154,13 @@ class _CPUHomePageState extends State<CPUHomePage> {
           children: [
             turnOfCircle
                 ? const Icon(
-                    FontAwesomeIcons.circle,
-                    size: 35,
-                  )
+              FontAwesomeIcons.circle,
+              size: 35,
+            )
                 : const Icon(
-                    Icons.clear,
-                    size: 40,
-                  ),
+              Icons.clear,
+              size: 40,
+            ),
             const Text(
               'のターン',
               style: TextStyle(fontSize: 30),
@@ -182,13 +177,13 @@ class _CPUHomePageState extends State<CPUHomePage> {
           children: [
             !turnOfCircle
                 ? const Icon(
-                    FontAwesomeIcons.circle,
-                    size: 35,
-                  )
+              FontAwesomeIcons.circle,
+              size: 35,
+            )
                 : const Icon(
-                    Icons.clear,
-                    size: 40,
-                  ),
+              Icons.clear,
+              size: 40,
+            ),
             const Text(
               "の勝ち!!",
               style: TextStyle(fontSize: 30),
@@ -216,28 +211,27 @@ class _CPUHomePageState extends State<CPUHomePage> {
           Expanded(
             child: InkWell(
               onTap: gameStatus == GameStatus.play
-                  ? () {
-                      if (statusList[_index] == PieceStatus.none) {
-                        statusList[_index] = PieceStatus.circle;
-                        confirmResult();
-                        turnOfCircle = !turnOfCircle;
-                        confirmResult();
-                        //TODO ここは少し時間を立ってから入れたい。
-                        while (true) {
-                          var rng = Random();
-                          var tap = rng.nextInt(16);
-                          if (statusList[tap] == PieceStatus.none) {
-                            statusList[tap] = PieceStatus.cross;
-                            break;
-                          }
-                          tap = rng.nextInt(16);
-                        }
-                        confirmResult();
-                        turnOfCircle = !turnOfCircle;
-                        confirmResult();
-                      }
-                      setState(() {});
+                  ? () async {
+                if (statusList[_index] == PieceStatus.none) {
+                  statusList[_index] = PieceStatus.circle;
+                  turnOfCircle = !turnOfCircle;
+                  while (true) {
+                    var rng = Random();
+                    var tap = rng.nextInt(16);
+                    if (statusList[tap] == PieceStatus.none) {
+                      statusList[tap] = PieceStatus.cross;
+                      break;
                     }
+                    tap = rng.nextInt(16);
+                  }
+                  // confirmResult();
+                  turnOfCircle = !turnOfCircle;
+
+                }
+                setState(() {
+                  confirmResult();
+                });
+              }
                   : null,
               child: AspectRatio(
                 aspectRatio: 1.0,
@@ -247,9 +241,9 @@ class _CPUHomePageState extends State<CPUHomePage> {
                     (i == 3)
                         ? Container()
                         : const VerticalDivider(
-                            width: 0.0,
-                            color: Colors.black,
-                          ),
+                      width: 0.0,
+                      color: Colors.black,
+                    ),
                   ],
                 ),
               ),
@@ -306,13 +300,14 @@ class _CPUHomePageState extends State<CPUHomePage> {
   }
 
   void confirmResult() {
+    print(turnOfCircle);
     if (!statusList.contains(PieceStatus.none)) {
       gameStatus = GameStatus.draw;
     }
     //行における勝敗のパターン
     for (int i = 0; i < settlementListHorizontal.length; i++) {
       if (statusList[settlementListHorizontal[i][0]] ==
-              statusList[settlementListHorizontal[i][1]] &&
+          statusList[settlementListHorizontal[i][1]] &&
           statusList[settlementListHorizontal[i][1]] ==
               statusList[settlementListHorizontal[i][2]] &&
           statusList[settlementListHorizontal[i][2]] ==
@@ -331,7 +326,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
     //行における勝敗のパターン
     for (int i = 0; i < settlementListVertical.length; i++) {
       if (statusList[settlementListVertical[i][0]] ==
-              statusList[settlementListVertical[i][1]] &&
+          statusList[settlementListVertical[i][1]] &&
           statusList[settlementListVertical[i][1]] ==
               statusList[settlementListVertical[i][2]] &&
           statusList[settlementListVertical[i][2]] ==
@@ -350,7 +345,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
     //斜めにおける勝敗パターン
     for (int i = 0; i < settlementListDiagonal.length; i++) {
       if (statusList[settlementListDiagonal[i][0]] ==
-              statusList[settlementListDiagonal[i][1]] &&
+          statusList[settlementListDiagonal[i][1]] &&
           statusList[settlementListDiagonal[i][1]] ==
               statusList[settlementListDiagonal[i][2]] &&
           statusList[settlementListDiagonal[i][2]] ==
@@ -374,7 +369,7 @@ class _CPUHomePageState extends State<CPUHomePage> {
     //正方形における勝敗のパターン
     for (int i = 0; i < settlementListFour.length; i++) {
       if (statusList[settlementListFour[i][0]] ==
-              statusList[settlementListFour[i][1]] &&
+          statusList[settlementListFour[i][1]] &&
           statusList[settlementListFour[i][1]] ==
               statusList[settlementListFour[i][2]] &&
           statusList[settlementListFour[i][2]] ==
