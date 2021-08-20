@@ -9,6 +9,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,15 +20,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'まるばつゲーム！'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -40,46 +40,40 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> buildLine = [Container()];
   double lineThickness = 4.0;
   late double lineWidth;
-
   final List<List<int>> settlementListHorizontal = [
     //横の勝ち方
-    [0,1,2,3],
-    [4,5,6,7],
-    [8,9,10,11],
-    [12,13,14,15],
+    [0, 1, 2, 3],
+    [4, 5, 6, 7],
+    [8, 9, 10, 11],
+    [12, 13, 14, 15],
   ];
 
   //横の勝ち方
   final List<List<int>> settlementListVertical = [
-    [0,4,8,12],
-    [1,5,9,13],
-    [2,6,10,14],
-    [3,7,11,15],
+    [0, 4, 8, 12],
+    [1, 5, 9, 13],
+    [2, 6, 10, 14],
+    [3, 7, 11, 15],
   ];
-
   final List<List<int>> settlementListDiagonal = [
     //斜めの勝ち方
-    [0,5,10,15],
-    [3,6,9,12],
+    [0, 5, 10, 15],
+    [3, 6, 9, 12],
   ];
-
-
   final List<List<int>> settlementListfour = [
     //正方形
     //1列目の
-    [0,1,4,5],
-    [2,3,6,7],
-    [1,2,5,6],
-
+    [0, 1, 4, 5],
+    [2, 3, 6, 7],
+    [1, 2, 5, 6],
     //２列目
-    [4,5,8,9],
-    [5,6,9,10],
-    [6,7,10,11],
-
+    [4, 5, 8, 9],
+    [5, 6, 9, 10],
+    [6, 7, 10, 11],
     //3列目
-    [8,9,12,13],
-    [9,10,13,14],
-    [10,11,14,15],
+    [8, 9, 12, 13],
+    [9, 10, 13, 14],
+    [10, 11, 14, 15],
   ];
 
   @override
@@ -92,7 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.blue,size: 40,),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.blue,
+              size: 40,
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -100,20 +98,26 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.menu,color: Colors.blue,),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.blue,
+            ),
             onPressed: () {
               showDialog(
-                  context: context, builder: (_){
-                return AlertDialog(
-                  title: const Center(
-                    child: Text(
-                      '勝ち手一覧',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  content: Image.asset('assets/images/1.png',),
-                );
-              });
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Center(
+                        child: Text(
+                          '勝ち手一覧',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      content: Image.asset(
+                        'assets/images/1.png',
+                      ),
+                    );
+                  });
             },
           ),
         ],
@@ -151,24 +155,38 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-
-
   Widget buildRow() {
     switch (gameStatus) {
       case GameStatus.play:
         return Row(
           children: [
-            turnOfCircle ? const Icon(FontAwesomeIcons.circle,size: 35,) : const Icon(Icons.clear,size: 40,),
-            const Text('のターン',style: TextStyle(fontSize: 30)),
+            turnOfCircle
+                ? const Icon(
+              FontAwesomeIcons.circle,
+              size: 35,
+            )
+                : const Icon(
+              Icons.clear,
+              size: 40,
+            ),
+            const Text('のターン', style: TextStyle(fontSize: 30)),
           ],
         );
       case GameStatus.draw:
-        return const Text("引き分けです。",style: TextStyle(fontSize: 30));
+        return const Text("引き分けです。", style: TextStyle(fontSize: 30));
       case GameStatus.settlement:
         return Row(
           children: [
-            !turnOfCircle ? const Icon(FontAwesomeIcons.circle,size: 35,) : const Icon(Icons.clear,size: 40,),
-            const Text("の勝ち!!",style: TextStyle(fontSize: 30)),
+            !turnOfCircle
+                ? const Icon(
+              FontAwesomeIcons.circle,
+              size: 35,
+            )
+                : const Icon(
+              Icons.clear,
+              size: 40,
+            ),
+            const Text("の勝ち!!", style: TextStyle(fontSize: 30)),
           ],
         );
       default:
@@ -177,7 +195,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildColumn() {
-    List<Widget> _columeChildren = [const Divider(height: 0.0, color: Colors.black,),];
+    List<Widget> _columnChildren = [
+      const Divider(
+        height: 0.0,
+        color: Colors.black,
+      ),
+    ];
     List<Widget> _rowChildren = [];
     for (int j = 0; j < 4; j++) {
       //横の行を作成するもの
@@ -189,13 +212,15 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: gameStatus == GameStatus.play
                   ? () {
                 if (statusList[_index] == PieceStatus.none) {
-                  statusList[_index] =
-                  turnOfCircle ? PieceStatus.cirlce : PieceStatus.cross;
+                  statusList[_index] = turnOfCircle
+                      ? PieceStatus.cirlce
+                      : PieceStatus.cross;
                   turnOfCircle = !turnOfCircle;
                   confirmResult();
                 }
                 setState(() {});
-              } : null,
+              }
+                  : null,
               child: AspectRatio(
                 aspectRatio: 1.0,
                 child: Row(
@@ -214,24 +239,27 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
       }
-      _columeChildren.add(
+      _columnChildren.add(
         Row(
           children: _rowChildren,
         ),
       );
-      _columeChildren.add(
-          const Divider(height: 0.0, color: Colors.black,));
+      _columnChildren.add(const Divider(
+        height: 0.0,
+        color: Colors.black,
+      ));
       _rowChildren = [];
     }
     return Stack(
       children: [
-        Column(children: _columeChildren),
+        Column(children: _columnChildren),
         Stack(
           children: buildLine,
         ),
       ],
     );
   }
+
   Container build1(PieceStatus pieceStatus) {
     switch (pieceStatus) {
       case PieceStatus.none:
@@ -264,17 +292,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //行における勝敗のパターン
     for (int i = 0; i < settlementListHorizontal.length; i++) {
-      if (statusList[settlementListHorizontal[i][0]] == statusList[settlementListHorizontal[i][1]]
-          &&
-          statusList[settlementListHorizontal[i][1]] == statusList[settlementListHorizontal[i][2]]
-          &&
-          statusList[settlementListHorizontal[i][2]] == statusList[settlementListHorizontal[i][3]]
-          &&
+      if (statusList[settlementListHorizontal[i][0]] ==
+          statusList[settlementListHorizontal[i][1]] &&
+          statusList[settlementListHorizontal[i][1]] ==
+              statusList[settlementListHorizontal[i][2]] &&
+          statusList[settlementListHorizontal[i][2]] ==
+              statusList[settlementListHorizontal[i][3]] &&
           statusList[settlementListHorizontal[i][0]] != PieceStatus.none) {
         buildLine.add(Container(
-          //width: lineWidth,
-          // height: lineThickness,
-          // color: Colors.black.withOpacity(0.3),
           margin: EdgeInsets.only(
               top: lineWidth / 3 * i + lineWidth / 6 - lineThickness / 2),
         ));
@@ -284,17 +309,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //行における勝敗のパターン
     for (int i = 0; i < settlementListVertical.length; i++) {
-      if (statusList[settlementListVertical[i][0]] == statusList[settlementListVertical[i][1]]
-          &&
-          statusList[settlementListVertical[i][1]] == statusList[settlementListVertical[i][2]]
-          &&
-          statusList[settlementListVertical[i][2]] == statusList[settlementListVertical[i][3]]
-          &&
+      if (statusList[settlementListVertical[i][0]] ==
+          statusList[settlementListVertical[i][1]] &&
+          statusList[settlementListVertical[i][1]] ==
+              statusList[settlementListVertical[i][2]] &&
+          statusList[settlementListVertical[i][2]] ==
+              statusList[settlementListVertical[i][3]] &&
           statusList[settlementListVertical[i][0]] != PieceStatus.none) {
         buildLine.add(Container(
-          //width: lineThickness,
-          //height: lineWidth,
-          //color: Colors.black.withOpacity(0.3),
           margin: EdgeInsets.only(
               left: lineWidth / 3 * i + lineWidth / 6 - lineThickness / 2),
         ));
@@ -304,24 +326,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //斜めにおける勝敗パターン
     for (int i = 0; i < settlementListDiagonal.length; i++) {
-      if (statusList[settlementListDiagonal[i][0]] == statusList[settlementListDiagonal[i][1]]
-          &&
-          statusList[settlementListDiagonal[i][1]] == statusList[settlementListDiagonal[i][2]]
-          &&
-          statusList[settlementListDiagonal[i][2]] == statusList[settlementListDiagonal[i][3]]
-          &&
+      if (statusList[settlementListDiagonal[i][0]] ==
+          statusList[settlementListDiagonal[i][1]] &&
+          statusList[settlementListDiagonal[i][1]] ==
+              statusList[settlementListDiagonal[i][2]] &&
+          statusList[settlementListDiagonal[i][2]] ==
+              statusList[settlementListDiagonal[i][3]] &&
           statusList[settlementListDiagonal[i][0]] != PieceStatus.none) {
-        buildLine.add(Transform.rotate(
-          alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
-          angle: i == 0 ? -pi / 4 : pi / 4,
-          child: Container(
-              width: lineThickness,
-              /// height: lineWidth * sqrt(2),
-              //height: lineWidth * sqrt(1.7),
-              //color: Colors.black.withOpacity(0.5),
-              margin: EdgeInsets.only(left: i == 0 ? 0.0 : lineWidth - lineThickness)
+        buildLine.add(
+          Transform.rotate(
+            alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
+            angle: i == 0 ? -pi / 4 : pi / 4,
+            child: Container(
+                width: lineThickness,
+                margin: EdgeInsets.only(
+                    left: i == 0 ? 0.0 : lineWidth - lineThickness)),
           ),
-        ),
         );
         gameStatus = GameStatus.settlement;
       }
@@ -329,24 +349,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //行における勝敗のパターン
     for (int i = 0; i < settlementListfour.length; i++) {
-      if (statusList[settlementListfour[i][0]] == statusList[settlementListfour[i][1]]
-          &&
-          statusList[settlementListfour[i][1]] == statusList[settlementListfour[i][2]]
-          &&
-          statusList[settlementListfour[i][2]] == statusList[settlementListfour[i][3]]
-          &&
+      if (statusList[settlementListfour[i][0]] ==
+          statusList[settlementListfour[i][1]] &&
+          statusList[settlementListfour[i][1]] ==
+              statusList[settlementListfour[i][2]] &&
+          statusList[settlementListfour[i][2]] ==
+              statusList[settlementListfour[i][3]] &&
           statusList[settlementListfour[i][0]] != PieceStatus.none) {
-        buildLine.add(Transform.rotate(
-          alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
-          angle: i == 0 ? -pi / 4 : pi / 4,
-          child: Container(
-              width: lineThickness,
-              /// height: lineWidth * sqrt(2),
-              //height: lineWidth * sqrt(1.7),
-              //color: Colors.black.withOpacity(0.5),
-              margin: EdgeInsets.only(left: i == 0 ? 0.0 : lineWidth - lineThickness)
+        buildLine.add(
+          Transform.rotate(
+            alignment: i == 0 ? Alignment.topLeft : Alignment.topRight,
+            angle: i == 0 ? -pi / 4 : pi / 4,
+            child: Container(
+                width: lineThickness,
+                margin: EdgeInsets.only(
+                    left: i == 0 ? 0.0 : lineWidth - lineThickness)),
           ),
-        ),
         );
         gameStatus = GameStatus.settlement;
       }
