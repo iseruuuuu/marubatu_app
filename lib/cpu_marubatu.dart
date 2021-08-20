@@ -120,16 +120,26 @@ class _CPUHomePageState extends State<CPUHomePage> {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Center(child: buildRow()),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: buildRow(),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              width: 130,
+              width: MediaQuery.of(context).size.width / 1.5,
               height: 50,
               child: ElevatedButton(
-                child: const Text("クリア"),
+                child: const Text(
+                  'クリア',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
                 onPressed: () {
                   setState(() {
                     turnOfCircle = true;
@@ -226,7 +236,6 @@ class _CPUHomePageState extends State<CPUHomePage> {
                   }
                   // confirmResult();
                   turnOfCircle = !turnOfCircle;
-
                 }
                 setState(() {
                   confirmResult();
