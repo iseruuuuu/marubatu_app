@@ -103,12 +103,15 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.menu,color: Colors.blue,),
             onPressed: () {
               showDialog(
-                context: context, builder: (_){
+                  context: context, builder: (_){
                 return AlertDialog(
-                    title: Center(
-                        child: Text("勝ち手一覧", style: TextStyle(fontSize: 20),)),
-                    content:
-                    Image.asset('assets/images/1.png',),
+                  title: const Center(
+                    child: Text(
+                      '勝ち手一覧',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  content: Image.asset('assets/images/1.png',),
                 );
               });
             },
